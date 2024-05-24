@@ -26,6 +26,7 @@ class SearchViewController: NSViewController, NSTextFieldDelegate, NSWindowDeleg
     var hotkey: DDHotKey?
     var listProvider: ListProvider?
     var promptValue = ""
+    var exitFlag = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,16 +43,16 @@ class SearchViewController: NSViewController, NSTextFieldDelegate, NSWindowDeleg
             object: nil
         )
 
+        let options = DmenuMac.parseOrExit()
+        if options.prompt != nil {
+            promptValue = options.prompt!
+        }
+        
         let stdinStr = ReadStdin.read()
         if stdinStr.count > 0 {
             listProvider = PipeListProvider(str: stdinStr)
         } else {
-            listProvider = AppListProvider()
-        }
-
-        let options = DmenuMac.parseOrExit()
-        if options.prompt != nil {
-            promptValue = options.prompt!
+            listProvider = AppListProvider(exitFlag: options.exit ?? false)
         }
 
         clearFields()
@@ -152,8 +153,6 @@ class SearchViewController: NSViewController, NSTextFieldDelegate, NSWindowDeleg
 
     func closeApp() {
         clearFields()
-        if promptValue == "" {
-            NSApplication.shared.hide(nil)
-        }
+        NSApplication.shared.hide(nil)
     }
 }
