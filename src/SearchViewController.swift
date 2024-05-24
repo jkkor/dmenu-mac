@@ -26,7 +26,7 @@ class SearchViewController: NSViewController, NSTextFieldDelegate, NSWindowDeleg
     var hotkey: DDHotKey?
     var listProvider: ListProvider?
     var promptValue = ""
-    var exitFlag = false
+    var exitFlag = true
 
     override func viewDidLoad() {
         super.viewDidLoad()

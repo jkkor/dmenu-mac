@@ -21,5 +21,5 @@ struct DmenuMac: ParsableArguments {
     var prompt: String?
     
     @Flag(name: .shortAndLong, help: "Exit the process after an item is selected.")
-    var exit: Bool = false
+    var exit: Bool = true
 }
